@@ -507,89 +507,30 @@ function ptre_fix_property_hreflang_tags() {
     ];
 
     foreach ($langs as $code => $hreflang) {
-        $localized = apply_filters('wpml_permalink', $base_url, $code);
-        if (!$localized) continue; // Skip if WPML fails to provide URL
-
-        // Properly decode HTML entities
-        $localized = html_entity_decode($localized, ENT_QUOTES, 'UTF-8');
-        
-        // Ensure we have valid UTF-8
-        if (!mb_check_encoding($localized, 'UTF-8')) {
-            $localized = mb_convert_encoding($localized, 'UTF-8', 'UTF-8');
-        }
-        
-        // Parse and properly encode URL components
-        $parts = wp_parse_url($localized);
-        if (!$parts || !isset($parts['path'])) continue; // Skip if URL parsing fails
-
-        $segments = explode('/', trim($parts['path'], '/'));
-        $segments = array_map(function($segment) {
-            // Remove any invalid UTF-8 sequences before encoding
-            $clean = mb_convert_encoding($segment, 'UTF-8', 'UTF-8');
-            return rawurlencode($clean);
-        }, $segments);
-
-        $url = $parts['scheme'] . '://' . $parts['host'] . '/' . implode('/', $segments) . '/';
-
-        printf(
-            "<link rel='alternate' hreflang='%s' href='%s' />\n",
-            esc_attr($hreflang),
-            esc_url($url)
-        );
+        $url = $code === 'fr' ? $base_url : str_replace('/properties/', '/en/properties/', $base_url);
+        printf('<link rel="alternate" hreflang="%s" href="%s" />' . "\n", $hreflang, esc_url($url));
     }
 
-    // x-default (English version)
-    $default = apply_filters('wpml_permalink', $base_url, 'en');
-    if ($default) {
-        $default = html_entity_decode($default, ENT_QUOTES, 'UTF-8');
-        
-        // Ensure valid UTF-8
-        if (!mb_check_encoding($default, 'UTF-8')) {
-            $default = mb_convert_encoding($default, 'UTF-8', 'UTF-8');
-        }
-
-        $parts = wp_parse_url($default);
-        if ($parts && isset($parts['path'])) {
-            $segments = array_map(function($segment) {
-                $clean = mb_convert_encoding($segment, 'UTF-8', 'UTF-8');
-                return rawurlencode($clean);
-            }, explode('/', trim($parts['path'], '/')));
-            
-            $url = $parts['scheme'] . '://' . $parts['host'] . '/' . implode('/', $segments) . '/';
-
-            printf(
-                "<link rel='alternate' hreflang='x-default' href='%s' />\n",
-                esc_url($url)
-            );
-        }
-    }
+    // Add x-default without /x-default/ in the URL
+    printf('<link rel="alternate" href="%s" hreflang="x-default" />' . "\n", esc_url($base_url));
 }
 
 /**
- * Property URL rewrite rules
+ * Add rewrite rules for property URLs
  */
+add_action('init', 'ptre_add_property_rewrite_rules');
 function ptre_add_property_rewrite_rules() {
-    // English URLs
     add_rewrite_rule(
-        '^properties/[^/]+/([0-9]+)/?$',
-        'index.php?pagename=properties&mls=$matches[1]',
+        'properties/([^/]+)/([0-9]+)/?$',
+        'index.php?post_type=properties&mls=$matches[2]',
         'top'
     );
-
-    // French URLs
     add_rewrite_rule(
-        '^fr/properties/[^/]+/([0-9]+)/?$',
-        'index.php?pagename=properties&mls=$matches[1]&lang=fr',
+        'en/properties/([^/]+)/([0-9]+)/?$',
+        'index.php?post_type=properties&mls=$matches[2]&lang=en',
         'top'
     );
 }
-add_action('init', 'ptre_add_property_rewrite_rules', 10);
-
-// Remove WPML's x-default fallback as we handle it ourselves
-add_filter('wpml_hreflangs', function($hreflangs) {
-    unset($hreflangs['x-default']);
-    return $hreflangs;
-}, 10);
 
 /**
  * Add quick edit functionality for Cities categories
@@ -747,9 +688,27 @@ add_filter('wpseo_json_ld_output', function ($data) {
 
 // Fix: Set canonical to current URL for single property pages (with mls query var)
 add_filter('wpseo_canonical', function($canonical) {
-    if (get_query_var('mls')) {
-        return home_url($_SERVER['REQUEST_URI']);
+    global $result_obj;
+    if (get_query_var('mls') && isset($result_obj[$_GET['mls']]['property'])) {
+        return get_property_permalink((object)$result_obj[$_GET['mls']]['property']);
     }
     return $canonical;
-}, 20);
+}, 99);
+
+if (!function_exists('get_property_permalink')) {
+    function get_property_permalink($property) {
+        // Build the "street address" portion
+        $address = $property->civic_number_start . ' ' . $property->street_name;
+        // Use urlencode to encode spaces as + and special characters as %XX
+        $slug = urlencode($address);
+        return home_url("/properties/{$slug}/{$property->mls_no}/");
+    }
+}
+
+add_action('wp_head', function() {
+    if (get_query_var('mls') && isset($GLOBALS['result_obj'][$_GET['mls']]['property'])) {
+        $canonical = get_property_permalink((object)$GLOBALS['result_obj'][$_GET['mls']]['property']);
+        echo '<link rel="canonical" href="' . esc_url($canonical) . '" />' . PHP_EOL;
+    }
+}, 1); // Run early
 
