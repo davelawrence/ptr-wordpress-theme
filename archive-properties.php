@@ -19,11 +19,27 @@ if ( defined('ICL_LANGUAGE_CODE') && ICL_LANGUAGE_CODE === 'fr' ) {
     $pt_desc  = 'Start your real estate journey by exploring homes for sale across the West Island and Vaudreuil-Soulanges regions. Contact us to schedule your visit!';
 }
 
-// 2) Hook into the head
-add_action( 'wp_head', function() use ( $pt_title, $pt_desc ) {
-    echo "<title>" . esc_html( $pt_title ) . "</title>\n";
-    echo "<meta name=\"description\" content=\"" . esc_attr( $pt_desc ) . "\" />\n";
-}, 1 );
+// 2) Use SEO plugin filters for archive pages
+add_filter('pre_get_document_title', function($title) use ($pt_title) {
+    if (is_post_type_archive('properties')) {
+        return $pt_title;
+    }
+    return $title;
+}, 20);
+
+add_filter('wpseo_title', function($title) use ($pt_title) {
+    if (is_post_type_archive('properties')) {
+        return $pt_title;
+    }
+    return $title;
+}, 20);
+
+add_filter('wpseo_metadesc', function($desc) use ($pt_desc) {
+    if (is_post_type_archive('properties')) {
+        return $pt_desc;
+    }
+    return $desc;
+}, 20);
 
 get_header(); ?>
 
