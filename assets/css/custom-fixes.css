@@ -1,0 +1,266 @@
+/**
+ * Custom CSS Fixes for Peter Thompson Theme
+ * This file contains custom CSS fixes that override theme defaults
+ * Organized by section for better maintainability
+ */
+
+/* Temporary Test Style - Will remove after verification */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    background: red;
+    z-index: 999999;
+}
+
+/* ==========================================================================
+   Layout Fixes
+   ========================================================================== */
+
+/* Hero Section Layout */
+.hero-section {
+    position: relative;
+    padding: 120px 0 50px;
+    background: #f9f9f9;
+}
+
+.hero-section .container {
+    max-width: 1200px;
+    padding-top: 40px;
+    padding-bottom: 0px;
+}
+
+.hero-section .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-section .col-lg-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Reviews Section Layout */
+.reviews {
+    padding: 80px 0px 80px 0px;
+}
+
+/* Instagram Feed Layout */
+#sb_instagram {
+    width: 100% !important;
+    padding-bottom: 0 !important;
+}
+
+#sb_instagram #sbi_images {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+    float: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ==========================================================================
+   Property Listing Fixes
+   ========================================================================== */
+
+/* Blog Post Card Styles */
+.blogcard a,
+.card a,
+.blogcard h3 a,
+.blogcard .btn-link a,
+.blogcard .text a,
+.card .btn-link a,
+.card .shortIntro a,
+.card-body h3 a,
+.blogcard .text p a {
+    text-decoration: none !important;
+    border-bottom: none !important;
+    color: inherit !important;
+    font-weight: normal !important;
+}
+
+/* ==========================================================================
+   Mobile Responsiveness
+   ========================================================================== */
+
+/* Mobile Hero Section */
+@media only screen and (max-width: 991px) {
+    .hero-section {
+        padding: 20px 0 30px;
+    }
+    
+    .hero-section .container {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    
+    .hero-section .row {
+        flex-direction: column-reverse;
+    }
+    
+    .hero-section .col-lg-6 {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Mobile Instagram Feed */
+@media (max-width: 991px) {
+    #sb_instagram #sbi_images {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    #sb_instagram #sbi_images {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* Mobile Logo Fixes */
+@media only screen and (max-width: 991px) {
+    .navbar-brand {
+        display: inline-flex;
+        align-items: center;
+        width: auto !important;
+        max-width: 150px !important;
+    }
+    
+    .navbar-brand img {
+        width: auto !important;
+        height: 40px !important;
+        max-width: none !important;
+        object-fit: contain !important;
+    }
+}
+
+/* Mobile Heading Sizes */
+@media screen and (max-width: 767px) {
+    .hero-section h1 {
+        font-size: 24px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 15px !important;
+        color: #000a40 !important;
+        font-weight: 700 !important;
+        text-align: center !important;
+    }
+}
+
+/* ==========================================================================
+   Navigation Fixes
+   ========================================================================== */
+
+/* Breadcrumbs */
+#breadcrumbs {
+    color: #000;
+    font-size: 16px;
+    visibility: visible;
+    opacity: 1;
+    display: inline-block;
+}
+
+#breadcrumbs a {
+    color: #000;
+    text-decoration: underline;
+}
+
+#breadcrumbs .breadcrumb_last {
+    font-weight: bold;
+    color: #000;
+}
+
+/* ==========================================================================
+   Component-specific Fixes
+   ========================================================================== */
+
+/* Video Embed */
+.video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    margin-bottom: 30px;
+}
+
+.video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Instagram Feed Styling */
+.instagram-feed {
+    padding: 60px 0;
+}
+
+.instagram-feed p, 
+.instagram-feed h1, 
+.instagram-feed h2, 
+.instagram-feed h3, 
+.instagram-feed span {
+    color: #000 !important;
+}
+
+/* Instagram Feed Buttons */
+.instagram-feed .sbi_load_btn {
+    background-color: #ffffff !important;
+    color: #000033 !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    padding: 16px 32px !important;
+    border-radius: 50px !important;
+    border: none !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.instagram-feed .sbi_follow_btn a {
+    background-color: #000033 !important;
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    font-size: 16px !important;
+    padding: 16px 32px !important;
+    border-radius: 50px !important;
+    border: none !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Reviews Component */
+.reviews .grw-review-inner {
+    background: #ffffff !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    padding: 20px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+/* AOS Animation Fixes */
+[data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+.aos-animate,
+.aos-init {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+} 
+
+/* Nearby Cities: force white links */
+.nearby-cities .list-unstyled li a {
+  color: #fff !important;
+}

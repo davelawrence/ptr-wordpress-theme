@@ -1,0 +1,22 @@
+<div class="col-lg-4 col-md-6 col-12 p-2">
+    <a href="[property_url]" class="card">
+        <img src="[property_image_thumb]" data-src="[property_image]" class="lazyload card-img-top" alt="[property_address]"/>
+        <span>[property_label]</span>
+        <div class="card-body">
+            <div class="top-card-ctn">
+                <?php if($this->single->property->status !== "VE"): ?>
+                    <h4 class="fw-bold">[property_price]</h4>
+                <?php endif; ?>
+                <h3>[property_address] [property_municipality]</h3>
+                <p><?= descriptionExcerpt($this->single->property->remarks); ?></p>
+            </div>
+            <div class="bottom-ctn">
+                <hr />
+                <div class="d-flex prop-feat">
+                    <div><img src="<?php echo get_template_directory_uri();?>/assets/img/icon-bedroom.svg" /> [property_beds]</div>
+                    <div><img src="<?php echo get_template_directory_uri();?>/assets/img/icon-bathroom.svg" /> [property_baths]</div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

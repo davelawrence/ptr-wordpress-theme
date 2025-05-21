@@ -1,0 +1,19 @@
+<div class="col">
+    <a href="[property_url]" class="card">
+        <img src="[property_image_thumb]" data-src="[property_image]" class="lazyload card-img-top" alt="[property_address]"/>
+        <span>[property_label]</span>
+        <div class="card-body">
+            <?php if($this->single->property->status !== "VE"): ?>
+                <div class="h3">$1,295,000</div>
+            <?php endif; ?>
+            <h3><?php echo $this->single->property->property_type ?>, [property_municipality]</h3>
+            <p><img src="<?php echo get_template_directory_uri();?>/assets/img/icon-location.svg" /> [property_address]</p>
+            <hr />
+            <div class="d-flex prop-feat">
+                <div><img src="<?php echo get_template_directory_uri();?>/assets/img/reltor-template.svg" /> [property_liveable]</div>
+                <div><img src="<?php echo get_template_directory_uri();?>/assets/img/icon-bedroom.svg" /> [property_beds]</div>
+                <div><img src="<?php echo get_template_directory_uri();?>/assets/img/icon-bathroom.svg" /> [property_baths]</div>
+            </div>
+        </div>
+    </a>
+</div>

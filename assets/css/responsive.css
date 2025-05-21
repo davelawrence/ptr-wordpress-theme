@@ -1,0 +1,1283 @@
+@media only screen and (max-width: 991px) {
+	.navbar-expand-lg .navbar-nav>.nav-item .sub-menu {
+		position: relative;
+		display: none;
+		transform: none;
+		opacity: 1;
+		left: 0;
+	}
+
+	.navbar-expand-lg .navbar-nav>.nav-item:hover>.sub-menu {
+		position: relative;
+		display: block;
+		transform: none;
+		opacity: 1;
+		left: 0;
+		width: 100%;
+	}
+
+	.navbar-brand img {
+		max-height: 45px;
+	}
+
+	.main-nav .navbar .navbar-nav .nav-item {
+		margin: 0px 0px;
+		margin-left: 0px;
+	}
+
+	.navbar-toggler.menu-icon {
+		width: 40px;
+		padding: 0;
+		cursor: pointer;
+		position: relative;
+		border: 0px;
+		margin-right: 0px;
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
+	.navbar-toggler.menu-icon span {
+		width: 100%;
+		height: 4px;
+		display: block;
+		background: #000;
+		margin: 6px 0;
+		-webkit-transition: .5s;
+		transition: .5s;
+	}
+
+	.header.active {
+		background: #fff !important;
+	}
+
+	.navbar-toggler.menu-icon.active span:nth-child(1) {
+		-webkit-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+
+	.navbar-toggler.menu-icon.active span:nth-child(2) {
+		-webkit-transform: rotate(-45deg);
+		transform: rotate(-45deg);
+		display: none;
+	}
+
+	.navbar-toggler.menu-icon.active span:nth-child(3) {
+		-webkit-transform: rotate(-45deg);
+		transform: rotate(-45deg);
+	}
+
+	.navbar-toggler.menu-icon.active span {
+		position: absolute;
+		top: calc(50% - 8px);
+	}
+
+	.main-nav .navbar .navbar-nav {
+		padding-bottom: 0px;
+		width: 100%;
+		text-align: center;
+	}
+
+	.header.fixed .navbar-brand img,
+	.header .navbar-brand img {
+		max-height: 56px;
+	}
+
+	.header.fixed .navbar-brand img {
+		max-height: 40px;
+	}
+
+	.header.fixed .navbar-brand img, .header .navbar-brand img {
+		max-height: 35px;
+	}
+
+	.mebox .spr {
+		border-right: 1px solid #8d8d91;
+		margin-right: 10px;
+		padding: 2px;
+		padding-right: 1rem;
+	}
+
+	.mebox .searchbtn {
+		font-size: 20px;
+		line-height: 1em;
+		margin-left: 5px;
+	}
+
+	.navbar-toggler.menu-icon {
+		padding: 10px 12px;
+		font-size: 26px;
+		width: 45px;
+		min-width: 45px;
+		min-height: 45px;
+		max-height: 45px;
+		background-color: #222223;
+		border-radius: 12px;
+	}
+
+	.navbar-toggler.menu-icon span {
+		background: #fff;
+		height: 2px;
+		margin: 5px 0;
+		width: 20px;
+	}
+
+	.navbar-brand {
+		margin: 0;
+	}
+
+	.navbar-toggler.menu-icon.active span {
+		position: absolute;
+		top: calc(54% - 8px);
+	}
+
+	.navbar-toggler.menu-icon.active {
+		background-color: #f85757;
+		transform: scale3d(.95, .95, 1.01);
+	}
+
+	.formstyle {
+		padding: 32px 15px;
+		border-radius: 0;
+	}
+
+	.formstyle.active {
+		top: 100%;
+		bottom: auto;
+	}
+	.header .spr {
+		padding: 12px 13px;
+	}
+
+	.header .spr .spr {
+		padding: 0px 9px;
+	}
+
+	.wpml-ls-legacy-list-horizontal a {
+		color: #000;
+		font-size: 15px !important;
+		position: relative;
+		top: -2px;
+	}
+
+	figure.fig-background::after {
+		left: 10px;
+	}
+
+	.header .main-nav .navbar .navbar-nav>.nav-item>.nav-link {
+		border-bottom: 1px solid transparent;
+		font-size: 28px;
+	}
+
+	.main-nav .navbar .navbar-nav.middle {
+		padding-bottom: 0px;
+		width: 60%;
+		justify-content: start;
+		align-items: start;
+		padding-left: 15px;
+	}
+
+	.main-nav .navbar .navbar-nav.middle {
+		padding-top: 20px;
+	}
+
+	.main-nav .navbar .navbar-nav .nav-item {
+		padding-bottom: 25px;
+	}
+
+	.header .spr {
+		padding: 12px 13px !important;
+	}
+
+	.header .spr .spr {
+		padding: 0px 9px !important;
+	}
+	.navbar-expand-lg .navbar-nav>.nav-item .sub-menu {
+		position: relative;
+		display: none;
+		transform: none;
+		opacity: 1;
+		left: 0;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+	}
+
+	.main-nav .navbar .navbar-nav ul.sub-menu .nav-item a {
+		padding: 9px 0 2px;
+		font-size: 28px;
+	}
+}
+
+@media only screen and (max-width:767px) {
+	.foot-cta .cta-wrapper {
+		padding: 6rem 1.5rem;
+		border-radius: 12px;
+		background-color: #000a40;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 5em;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+	}
+
+	.foot-cta .btn-default {
+		padding: 20px 17px;
+	}
+
+	.subscribe-form h3 {
+		margin-top: 1rem;
+	}
+
+
+	.home-quote p {
+		font-size: 19px;
+	}
+
+	.reviews .card h2 {
+		font-size: 22px !important;
+	}
+
+
+	.foot-cta .d-flex {
+		display: block !important;
+	}
+
+	.info-card {
+		display: block;
+		margin-right: 0;
+		padding: 68px 34px;
+		border-radius: 24px;
+	}
+
+	.info-card .d-flex {
+		display: block !important;
+	}
+
+	.btn-default {
+		margin-bottom: 20px;
+		padding: 9px 20px;
+	}
+
+	h2 {
+		font-size:30px !important;
+	}
+
+	.reviews .card h2 {
+		font-size: 22px !important;
+	}
+
+	.formstyle {
+		width: 100%;
+	}
+
+	.formstyle .subscribe-form {
+		display: block;
+	}
+
+	.formstyle .subscribe-form .btn-default {
+		margin-top: 20px;
+	}
+
+	.info-card-link {
+		display: block !important;
+	}
+
+	.blogcard {
+		display: block;
+	}
+
+	.blogcard .text {
+		padding: 30px 20px;
+	}
+
+	.blogcard .img {
+		width: 100%;
+		min-width: 100%;
+	}
+
+	.blogcard .img img {
+		border-radius: 12px 12px 0px 0px;    
+		max-width: none;
+        min-height: 30em;
+	}
+
+	.aboutinfo h2 {
+		font-size: 33px !important;
+		margin-bottom: 40px;
+	}
+
+	.aboutimgs {
+		overflow: hidden;
+		padding: 50px 0px;
+	}
+
+	.aboutimgs .cwidth {
+		width: initial;
+	}
+
+	.aboutimgs .image-wrapper {
+		height: auto;
+		margin-bottom: 24px;
+	}
+
+	.aboutlook {
+		padding-bottom: 0;
+	}
+
+	.aboutlook h2 {
+		font-size: 23px !important;
+		margin-bottom: 40px;
+	}
+
+	.aboutlook h3 {
+		font-size: 36px;
+		line-height: .825em;
+		margin-bottom: 10px;
+	}
+
+	.aboutlook p {
+		font-size: 22px;
+		font-weight: 700;
+		line-height: 1.364em;
+		margin-bottom: 50px;
+	}
+
+	.aboutteam {
+		padding: 10px 0px 70px 0px;
+	}
+
+	.aboutteam h2 {
+		font-size: 23px !important;
+	}
+
+
+	.explore h2 {
+		font-size: 23px !important;
+		margin-bottom: 15px;
+	}
+
+	.explore .d-flex.justify-content-between {
+		justify-content: center !important;
+		flex-wrap: wrap;
+		text-align: center;
+		gap: 10px;
+	}
+
+	.teambox .text  {
+		padding: 30px 35px 46px;
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+
+	.teambox h3 {
+		font-size: 20px;
+	}
+
+	.blogdetals .blogimg {
+		width: 100%;
+		max-width: 100%;
+		height: 100%;
+		margin-right: 0;
+	}
+
+	.blogdetals {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 9rem;
+		overflow: hidden;
+	}
+
+	.blogdetals h6 {
+		margin-top: 30px;
+	}
+
+	.blogdetals h3 {
+		font-size: 30px;
+		margin-bottom: 15px;
+	}
+
+	.buysell-banner {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 7rem;
+		overflow: hidden;
+	}
+
+	.buysell-info h3 {
+		font-size: 1.4375rem;
+	}
+
+	.buysell-info .mbs {
+		margin-bottom: 40px;
+	}
+
+	.buysell-info .down {
+		padding-bottom: 3em;
+	}
+
+	.foot-cta h2 {
+		font-size: 23px !important;
+		line-height: 1.375em;
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	.foot-cta .btn-default {
+		width: 100%;
+		padding: 17px 17px;
+		text-align: center;
+	}
+
+	.prop-search {
+		display: block;
+		justify-content: space-between;
+	}
+
+	h1 {
+		font-size: 38px;
+	}
+
+	.elis-content .video-popup {
+		height: 250px;
+		border-radius: 16px;
+		margin: 24px 0px;
+		position: relative;
+	}
+
+	.elis-content .video-popup img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 112px;
+		margin-top: -46px;
+		margin-left: -56px;
+		transition: all ease .5s;
+	}
+
+	.community-cols.pdetails .sticky-col {
+		margin-top: 20px;
+		z-index: 2;
+		top: 00px;
+	}
+
+	.community-cols.pdetails .card {
+		padding: 48px 28px 50px;
+	}
+
+	.community-cols.pdetails {
+		padding-bottom: 0;
+	}
+
+	.property-banner {
+		padding-top: 450px;
+		padding-bottom: 20px;
+	}
+
+	.community-cols.pdetails .lts p {
+		font-size: 16px;
+		margin-bottom: 20px;
+	}
+
+	.icbox {
+		font-size: 18px;
+		margin-bottom: 35px;
+	}
+
+	.textinfo {
+		padding-top: 10rem;
+		padding-bottom: 4.5rem;
+	}
+
+	.textinfo h1 {
+		font-size: 30px;
+	}
+
+	.textinfo.terms h4 {
+		font-size: 22px;
+	}
+
+	.textinfo.terms h2 {
+		font-size: 17px !important;
+	}
+
+	.profile-details {
+		margin-bottom:15px;
+	}
+
+	.footer .btn-default {
+		width:100%;
+		margin-bottom:32px;
+	}
+
+	.footer-logo {
+		display:inline-block;
+		text-align:center;
+	}
+
+	.legal-links {
+		padding:0px;
+	}
+	.legal-links li {
+		display:block;
+		margin:20px 0px;
+		border:0px;
+	}
+
+	.wpml-ls-legacy-list-horizontal.wpml-ls-statics-footer {
+		margin-bottom:0px !important;
+	}
+
+	.wpml-ls-legacy-list-horizontal {
+		padding:0px !important;
+	}
+
+	.main-nav .navbar .navbar-nav.middle {
+		width:100%;
+	}
+
+	.banner {
+		height:25rem;
+	}
+
+
+	.page-banner h1 {
+		font-size: 32px;
+	}
+
+	.aboutinfo {
+		padding-top:140px;
+	}
+
+	.community-cols .card {
+		padding: 38px 15px 30px;
+	}
+
+	.formstyle {
+		display: none;
+	}
+
+	.formstyle.active {
+		display: block;
+	}
+
+	.container {
+		padding-left: 1.5em;
+		padding-right: 1.5em;
+	}
+
+	.reviews .card {
+		border-radius: 20px;
+		padding: 20px;
+	}
+
+	.info-card h2 {
+		font-size: 23px !important;
+	}
+
+	.informed-consumers.askpere {
+		padding-top: 120px;
+	}
+	.small-text-center{
+		text-align:center !important;
+	}
+	.latestpost .form-control {
+    border: 1px solid #f6f6f6;
+    background-color: #fff;
+	}
+	body.home .explore .card {
+    margin-bottom: 32px;
+}
+	.elis-main {
+    padding: 8rem 0 8rem 0;
+}
+	.elis-main h1 {
+    font-size: 1.75rem;
+}
+	
+	body.page-template-template-ellis .explore .form-control {
+    background-color: #fff;
+}
+	
+	.page-banner {
+    padding-top: 8rem;
+    padding-bottom: 5rem;
+}
+	.property-banner .btn-default {
+    margin-right: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+	
+	body.single .explore .card{
+		margin-bottom:32px;
+	}
+	.community-cols h1{
+        font-size: 1.75rem;
+    }
+	.sticky-col {
+    top: 0px;
+    height: auto;
+		position:relative;
+}
+	body.single-where-i-work section.explore.propeties-section h2{
+		text-align:left;
+	}
+	
+.explore h2 {
+    margin-bottom: 25px;
+}
+
+.community-cols.pdetails .card span.prc {
+    font-size: 27px;
+}
+
+.home-quote h2 {
+    margin-bottom: 20px;
+}
+
+figure.fig-background::after {
+    display: none;
+}
+
+.community-cols {
+    padding-top: 11rem;
+}
+.community-cols {
+    padding-top: 11.75rem;
+    padding-bottom: 7.5rem;
+}
+
+.community-cols p img {
+    margin-bottom: 40px;
+}
+
+.community-cols h2 {
+    font-size: 1.4375rem !important;
+}	
+
+.marketing-sells {
+	padding: 50px 0;
+}
+
+.get-to-know {
+	padding: 50px 0;
+}
+
+.explore {
+	padding: 0 0 50px 0;
+}
+
+.footer {
+	padding: 50px 0px 32px 0px;
+}
+
+.aboutlook {
+	padding: 0 0 50px 0;
+}
+.banner-new .banner-imgs {
+    padding-left: 0px;
+    margin-right: calc(-.5* var(--bs-gutter-x));
+}
+ 
+.banner-new h2 {
+    font-size: 38px;
+}
+ 
+.banner-new p {
+    max-width: 100%;
+}
+ 
+.foot-cta .d-flex {
+    display: block !important;
+}
+ 
+.foot-cta .cta-wrapper {
+    padding: 6rem 2rem;
+}
+ 
+.foot-cta .btn-default {
+    padding: 20px 22px;
+    margin-top: 14px;
+}
+ 
+section.explore.propeties-section.newpage h2 {
+    margin-bottom: 30px !important;
+}
+ 
+section.explore.propeties-section.newpage .col-12 .d-flex {
+    display: block !important;
+}
+ 
+.finding-dreams .dream-card .img {
+    min-width: 125px;
+    padding-bottom: 10px;
+}
+ 
+.finding-dreams .dream-card {
+    display: block;
+}
+ 
+.reviews.newpage .card {
+    padding: 40px 20px 0px;
+}
+ 
+.contact-info .section-title {
+    padding-right: 0px;
+    padding-bottom: 26px;
+}
+ 
+.contact-info .bg {
+    background: #000a40;
+    border-radius: 25px;
+    padding: 60px 20px;
+}
+ 
+.contact-info .icon-card {
+    display: block;
+}
+ 
+.contact-info .bg-white {
+    padding: 40px 25px;
+}
+ 
+.contact-info .btn-default {
+    margin-bottom: 20px;
+}
+ 
+.about-john .section-title {
+    padding-top: 20px;
+    padding-left: 0px;
+}
+ 
+.faq .accordion .accordion-item {
+    padding: 30px 20px 30px 30px;
+}
+ 
+.faq .accordion-body {
+    padding: 15px 20px 0px 0px;
+}
+ 
+.nearby-cities {
+    text-align: center !important;
+}
+ 
+.nearby-cities h3 {
+    margin-top: 15px;
+}
+ 
+.small-card-info .small-card {
+    padding: 60px 25px 60px;
+}
+ 
+.small-card-info {
+    padding: 90px 0px 110px 0px;
+}
+}
+
+@media only screen and (min-width:768px) and (max-width:991px) {
+	h2 {
+		font-size:30px !important;
+	}
+
+	.reviews .card h2 {
+		font-size: 22px !important;
+	}
+
+	.home-quote p {
+		font-size: 19px;
+	}
+
+
+	.foot-cta .cta-wrapper {
+		padding: 6rem 2rem;
+	}
+
+
+	.foot-cta .d-flex {
+		display: block !important;
+	}
+
+
+	.foot-cta .d-flex .btn-default{
+		margin-top: 20px;
+	}
+
+	.aboutlook h3 {
+		font-size: 44px;
+		margin-bottom:20px;
+	}
+
+	.aboutlook p {
+		font-size: 18px;
+	}
+
+	.blogdetals .blogimg {
+		width: 100%;
+		max-width: 100%;
+		height: 100%;
+		margin-right: 0;
+	}
+
+	.blogdetals {
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 9rem;
+		overflow: hidden;
+	}
+
+	.blogdetals h6 {
+		margin-top: 30px;
+	}
+
+	.buysell-info h3 {
+		font-size: 26px;
+	}
+
+	.community-cols.pdetails .sticky-col {
+		margin-top: 20px;
+		z-index: 2;
+		top: 00px;
+	}
+
+	.property-banner {
+		padding-top: 450px;
+	}
+
+	.textinfo {
+		padding-top: 12.75rem;
+		padding-bottom: 4.5rem;
+	}
+
+	.textinfo.terms h2 {
+		font-size: 20px !important;
+	}
+	.community-cols .card {
+		padding: 38px 15px 30px;
+	}
+
+	.aboutinfo {
+		padding-top: 200px;
+	}
+
+	.formstyle {
+		display: none;
+	}
+
+	.formstyle.active {
+		display: block;
+	}
+	.info-card-link {
+		display: block !important;
+	}
+
+	h2 {
+		font-size: 48px !important;
+	}
+
+	.foot-cta {
+		text-align: center;
+	}
+
+	.foot-cta .btn-default {
+		padding: 18px 35px;
+		transform: none;
+		margin: 0px 15px;
+	}
+
+	.footer-logo {
+		width: 100%;
+		max-width: 15.625rem;
+		margin-bottom: 2rem;
+		display: inline-block;
+		margin-top: 60px;
+	}
+
+	.foot-cta .cta-wrapper h2 {
+		font-size: 32px !important;
+	}
+
+	.info-card {
+		margin-right: 0rem;
+		margin-top: -13rem;
+		width: 90%;
+		position: relative;
+		left: 5%;
+	}
+	.sticky-col {
+    top: 0px;
+    height: auto;
+		position:relative;
+}
+	body.single .propeties-section .card,body.home .propeties-section .card, body.home .explore .card{
+		margin-bottom:32px;
+	}
+	.propeties-section .card p,.explore .card h3{
+		min-height:auto;
+	}	
+	    .header.fixed .navbar-brand img, .header .navbar-brand img {
+         max-height: 66px; 
+    }
+	.get-to-know .btn-default{
+		margin-bottom:20px;
+	}
+	.text-md-center{
+		text-align:center;
+	}
+	.aboutimgs .image-wrapper {
+   margin-bottom:30px;
+		height:auto;
+}
+	section.aboutlook .points{
+		margin-bottom:70px;
+	}
+	.aboutlook p {
+    color: #222223;
+    margin-bottom: 11px;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.364em;
+}
+	.aboutlook h3 {
+    color: #f85757;
+    font-size: 63px;
+    line-height: .825em;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+	.explore .card{
+		margin-bottom:32px;
+	}
+	    .main-nav .navbar .navbar-nav.middle {
+        width: 100%;
+    }
+	.d-flex.align-items-center.justify-content-between.explore-title {
+		flex-wrap: wrap;
+	}
+	.d-flex.align-items-center.justify-content-between.explore-title h2{
+		font-size:32px !important;
+	}
+	
+	.explore h2 {
+    font-size: 32px !important;
+}
+
+.marketing-sells {
+    padding: 70px 0px 120px 0px;
+}
+
+.marketing-sells .text-center.text-lg-start {
+    text-align: left !important;
+}
+
+.community-cols p img {
+    margin-bottom: 40px;
+}
+
+figure.fig-background::after {
+    display: none;
+}
+
+.community-cols {
+    padding-top: 11.75rem;
+    padding-bottom: 7.5rem;
+}
+
+.community-cols h2 {
+        font-size: 1.4375rem;
+    font-size: 32px !important;
+}
+	
+.banner-new h2 {
+    font-size: 35px;
+}
+ 
+.banner-new p {
+    max-width: 100%;
+}
+ 
+.banner-new .banner-imgs {
+    padding-left: 28px;
+    margin-right: -36px;
+}
+ 
+.newpage.explore .card .h3 {
+    font-size: 18px;
+}
+ 
+.section-title h2 {
+    font-size: 26px;
+}
+ 
+.latest-real .stats {
+    font-size: 32px;
+}
+ 
+.explore .card h3 {
+    font-size: 21px;
+}
+ 
+.foot-cta .d-flex {
+    display: block !important;
+}
+ 
+.foot-cta .cta-wrapper {
+    padding: 6rem 2rem;
+}
+ 
+.foot-cta .btn-default {
+    padding: 20px 22px;
+    margin-top: 14px;
+}
+ 
+.finding-dreams .dream-card .img {
+    min-width: 125px;
+    padding-bottom: 10px;
+}
+ 
+.finding-dreams .dream-card {
+    display: block;
+}
+ 
+.reviews.newpage .card {
+    padding: 40px 20px 0px;
+}
+ 
+.contact-info .section-title {
+    padding-right: 0px;
+    padding-bottom: 26px;
+}
+ 
+.contact-info .bg {
+    padding: 60px 20px;
+}
+ 
+.contact-info .icon-card img {
+    margin-right: 12px;
+    width: 67px;
+}
+ 
+.contact-info .icon-card {
+    padding: 30px 11px;
+}
+ 
+.contact-info .bg-white {
+    padding: 40px 25px;
+}
+ 
+.contact-info .icon-card h5 a {
+    font-size: 20px;
+}
+ 
+.contact-info .btn-default {
+    margin-bottom: 20px;
+}
+ 
+.about-john .section-title {
+    padding-top: 20px;
+    padding-left: 0px;
+}
+ 
+.contact-info .btn-default {
+    min-width: 180px;
+}
+ 
+.contact-info .social-links li {
+    margin-bottom: 10px;
+}
+ 
+.faq .accordion .accordion-item {
+    padding: 30px 20px 30px 30px;
+}
+ 
+.faq .accordion-body {
+    padding: 15px 20px 0px 25px;
+}
+ 
+.small-card-info .small-card {
+    padding: 60px 25px 60px;
+}
+ 
+.small-card-info {
+    padding: 90px 0px 110px 0px;
+}	
+}
+
+@media only screen and (min-width:992px) and (max-width:1399px) {
+	.main-nav .navbar .navbar-nav .nav-item .nav-link {
+		font-size: 14px;
+	}
+
+	.main-nav .navbar .navbar-nav .nav-item {
+		margin-left: 13px;
+	}
+
+	.informed-consumers.askpere .ins h2 {
+		font-size: 38px;
+	}
+
+	.community-cols.pdetails .sticky-col {
+		top: 95px;
+	}
+
+	.community-cols.pdetails .card {
+		padding: 48px 15px 50px;
+	}
+	.community-cols .card {
+		padding: 38px 15px 30px;
+	}
+
+	.aboutinfo {
+		padding-top: 200px;
+	}
+	.formstyle.active {
+		bottom: -102%;
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.main-nav .navbar .navbar-nav .nav-item.menu-item-has-children>a:before {
+		top: 9px;
+	}
+	
+	.foot-cta .cta-wrapper {
+    padding: 6rem 1rem;
+}
+
+.foot-cta .btn-default {
+    padding: 20px 19px;
+    transform: none;
+}
+
+.main-nav .navbar .navbar-nav .nav-item {
+    margin-left: 25px;
+}
+
+header .main-nav .navbar .navbar-nav>.nav-item>.nav-link {
+    font-size: 18px;
+}
+
+.community-cols.pdetails .sticky-col .card {
+    padding: 48px 35px 50px;
+}
+
+.get-to-know {
+    overflow: hidden;
+}
+   .blogdetals .col-lg-5 {
+        width: 60.666667%;
+    }
+
+    .blogimg {
+        border-radius: 16px;
+        width: 58.33333333%;
+        max-width: 65rem;
+        height: 100%;
+        margin-right: -18.75rem;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width:1200px) and (max-width:1399px) {
+    .blogdetals .col-lg-5 {
+        width: 50%;
+    }
+
+    .blogimg {
+        border-radius: 16px;
+        width: 50%;
+        max-width: 65rem;
+        height: 100%;
+        margin-right: -18.75rem;
+        overflow: hidden;
+    }
+}
+
+@media only screen and (min-width:1440px) {
+	.container {
+		max-width: 1350px;
+	}    
+}
+
+@media screen and (max-width: 576px) {
+	.single--team {
+		padding-top: 7rem;
+	}
+}
+
+@media only screen and (min-width:992px) and (max-width:1199px) {
+.faq .accordion .accordion-item {
+    padding: 40px 20px 40px 20px;
+}
+ 
+.faq .accordion .accordion-item h3 {
+    font-size: 22px;
+}
+ 
+.foot-cta .btn-default {
+    padding: 20px 8px;
+    transform: none;
+    font-weight: 600;
+    min-width: 183px;
+    text-align: center;
+    font-size: 14px;
+}
+ 
+.banner-new .banner-imgs {
+    margin-right: -45px;
+}
+ 
+.banner-new h2 {
+    font-size: 40px;
+}
+ 
+.contact-info .bg {
+    padding: 60px 30px 60px 30px;
+}
+ 
+.contact-info .icon-card {
+    padding: 30px 14px;
+}
+ 
+.contact-info .icon-card img {
+    margin-right: 12px;
+    width: 62px;
+}
+ 
+.contact-info .icon-card h5 a {
+    font-size: 19px;
+}
+ 
+}
+ 
+@media only screen and (min-width:1440px) {
+.container {
+    max-width: 1350px;
+}    
+}
+ 
+ 
+@media only screen and (min-width:1200px) and (max-width:1399px) {
+.contact-info .icon-card {
+    padding: 30px 30px;
+}
+ 
+.contact-info .icon-card img {
+    margin-right: 12px;
+    width: 62px;
+}
+ 
+.contact-info .icon-card h5 a {
+    font-size: 22px;
+}
+ 
+.foot-cta .btn-default {
+    padding: 20px 15px;
+    min-width: 183px;
+    font-size: 16px;
+}
+ 
+}
