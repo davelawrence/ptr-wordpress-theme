@@ -488,105 +488,162 @@ add_filter('wpseo_json_ld_output', 'add_real_estate_schema_to_yoast', 20);
 
 
 /**
- * Properly build a URL for a property, percent-encoding spaces & accents.
+ * Property URL and SEO handling
+ * Consolidated functions for proper URL encoding and multilingual support
+ */
+
+/**
+ * Generate properly encoded permalink for property
  */
 function get_property_permalink($property) {
     // build the "street address" portion
     $address = $property->civic_number_start . ' ' . $property->street_name;
 
-    // optional: strip accents so "ï" → "i"
-    if ( function_exists('remove_accents') ) {
-        $address = remove_accents( $address );
+    // Safety check for null or empty values
+    if (empty($address)) {
+        return home_url("/properties/address-unavailable/{$property->mls_no}/");
     }
+
+    // Convert to UTF-8 if not already
+    if (!mb_check_encoding($address, 'UTF-8')) {
+        $address = mb_convert_encoding($address, 'UTF-8');
+    }
+
+    // Double-check the conversion worked
+    if (!mb_check_encoding($address, 'UTF-8')) {
+        // Fallback: remove non-UTF8 characters
+        $address = mb_convert_encoding($address, 'UTF-8', 'UTF-8');
+    }
+
+    // Normalize the string (decompose and recompose)
+    if (function_exists('normalizer_normalize')) {
+        $address = normalizer_normalize($address, Normalizer::FORM_C);
+    }
+
+    // Additional safety: remove any potentially problematic characters
+    $address = preg_replace('/[^\p{L}\p{N}\s\-\']/u', '', $address);
 
     // rawurlencode() will turn spaces into %20 (not "+"), and accents into %XX
-    $slug = rawurlencode( $address );
+    $slug = rawurlencode($address);
 
-    return home_url( "/properties/{$slug}/{$property->mls_no}/" );
+    return home_url("/properties/{$slug}/{$property->mls_no}/");
 }
-
-
 
 /**
- * Ensure customizer CSS is loaded properly
+ * Handle multilingual property URLs (hreflang tags)
  */
-function ensure_customizer_css_loaded() {
-    // Get the customizer CSS
-    $custom_css = wp_get_custom_css();
-    
-    if (!empty($custom_css)) {
-        // Add the customizer CSS to our theme's custom.css file
-        $custom_css_file = get_template_directory() . '/assets/css/custom.css';
-        file_put_contents($custom_css_file, $custom_css);
+add_action('wp_head', 'ptre_fix_property_hreflang_tags', 0);
+function ptre_fix_property_hreflang_tags() {
+    if (get_post_type() !== 'properties') {
+        return;
+    }
+
+    // Stop WPML's own hreflang tags
+    remove_action('wp_head', ['WPML_SEO_HeadLangs', 'head_langs']);
+
+    $base_url = get_permalink();
+    if (!$base_url) return; // Safety check
+
+    $langs = [
+        'en' => 'en-CA',
+        'fr' => 'fr-CA',
+    ];
+
+    foreach ($langs as $code => $hreflang) {
+        $localized = apply_filters('wpml_permalink', $base_url, $code);
+        if (!$localized) continue; // Skip if WPML fails to provide URL
+
+        // Properly decode HTML entities
+        $localized = html_entity_decode($localized, ENT_QUOTES, 'UTF-8');
+        
+        // Ensure we have valid UTF-8
+        if (!mb_check_encoding($localized, 'UTF-8')) {
+            $localized = mb_convert_encoding($localized, 'UTF-8', 'UTF-8');
+        }
+        
+        // Parse and properly encode URL components
+        $parts = wp_parse_url($localized);
+        if (!$parts || !isset($parts['path'])) continue; // Skip if URL parsing fails
+
+        $segments = explode('/', trim($parts['path'], '/'));
+        $segments = array_map(function($segment) {
+            // Remove any invalid UTF-8 sequences before encoding
+            $clean = mb_convert_encoding($segment, 'UTF-8', 'UTF-8');
+            return rawurlencode($clean);
+        }, $segments);
+
+        $url = $parts['scheme'] . '://' . $parts['host'] . '/' . implode('/', $segments) . '/';
+
+        printf(
+            "<link rel='alternate' hreflang='%s' href='%s' />\n",
+            esc_attr($hreflang),
+            esc_url($url)
+        );
+    }
+
+    // x-default (English version)
+    $default = apply_filters('wpml_permalink', $base_url, 'en');
+    if ($default) {
+        $default = html_entity_decode($default, ENT_QUOTES, 'UTF-8');
+        
+        // Ensure valid UTF-8
+        if (!mb_check_encoding($default, 'UTF-8')) {
+            $default = mb_convert_encoding($default, 'UTF-8', 'UTF-8');
+        }
+
+        $parts = wp_parse_url($default);
+        if ($parts && isset($parts['path'])) {
+            $segments = array_map(function($segment) {
+                $clean = mb_convert_encoding($segment, 'UTF-8', 'UTF-8');
+                return rawurlencode($clean);
+            }, explode('/', trim($parts['path'], '/')));
+            
+            $url = $parts['scheme'] . '://' . $parts['host'] . '/' . implode('/', $segments) . '/';
+
+            printf(
+                "<link rel='alternate' hreflang='x-default' href='%s' />\n",
+                esc_url($url)
+            );
+        }
     }
 }
-add_action('customize_save_after', 'ensure_customizer_css_loaded');
 
-add_action( 'wp_head', 'ptre_fix_property_hreflang_tags', 0 );
-function ptre_fix_property_hreflang_tags() {
-  if ( get_post_type() !== 'properties' ) {
-    return;
-  }
-
-  // Stop WPML’s own hreflang tags
-  remove_action( 'wp_head', [ 'WPML_SEO_HeadLangs', 'head_langs' ] );
-
-  // Base URL for this property (page “properties” + ?mls=… or rewrite)
-  $base_url = get_permalink();
-
-  // The two languages you need
-  $langs = [
-    'en' => 'en-CA',
-    'fr' => 'fr-CA',
-  ];
-
-  foreach ( $langs as $code => $hreflang ) {
-    // WPML gives you the “localized” URL—unfortunately with backslashes
-    $localized = apply_filters( 'wpml_permalink', $base_url, $code );
-
-    // 1) Remove any backslashes that escaped apostrophes
-    $localized = str_replace('\\', '', $localized);
-
-    // 2) Parse URL and re-encode each path segment properly
-    $parts    = wp_parse_url( $localized );
-    $segments = explode( '/', trim( $parts['path'], '/' ) );
-    $segments = array_map( 'rawurlencode', $segments );
-    $new_path = '/' . implode( '/', $segments ) . '/';
-
-    // Rebuild absolute URL (preserving scheme + host)
-    $url = $parts['scheme'] . '://' . $parts['host'] . $new_path;
-
-    printf(
-      "<link rel='alternate' hreflang='%s' href='%s' />\n",
-      esc_attr( $hreflang ),
-      esc_url( $url )
+/**
+ * Property URL rewrite rules
+ */
+function ptre_add_property_rewrite_rules() {
+    // English URLs
+    add_rewrite_rule(
+        '^properties/[^/]+/([0-9]+)/?$',
+        'index.php?pagename=properties&mls=$matches[1]',
+        'top'
     );
-  }
 
-// x-default fallback (pointing to English)
-$default = apply_filters( 'wpml_permalink', $base_url, 'en' );
-
-// 1) Remove slashes
-$default = str_replace('\\', '', $default);
-
-// 2) Decode HTML entities (like &#039;)
-$default = html_entity_decode($default, ENT_QUOTES, 'UTF-8');
-
-// 3) Parse and re-encode
-$parts    = wp_parse_url( $default );
-$segments = array_map( 'rawurlencode', explode( '/', trim( $parts['path'], '/' ) ) );
-$path     = '/' . implode( '/', $segments ) . '/';
-$url      = $parts['scheme'] . '://' . $parts['host'] . $path;
-
-printf(
-  "<link rel='alternate' hreflang='x-default' href='%s' />\n",
-  esc_url( $url )
-);
-
+    // French URLs
+    add_rewrite_rule(
+        '^fr/properties/[^/]+/([0-9]+)/?$',
+        'index.php?pagename=properties&mls=$matches[1]&lang=fr',
+        'top'
+    );
 }
+add_action('init', 'ptre_add_property_rewrite_rules', 10);
 
+/**
+ * Ensure consistent canonical URLs in Yoast SEO
+ */
+add_filter('wpseo_canonical', function($canonical) {
+    if (get_query_var('mls')) {
+        $request = strtok($_SERVER['REQUEST_URI'], '?');
+        return home_url($request);
+    }
+    return $canonical;
+}, 20);
 
-
+// Remove WPML's x-default fallback as we handle it ourselves
+add_filter('wpml_hreflangs', function($hreflangs) {
+    unset($hreflangs['x-default']);
+    return $hreflangs;
+}, 10);
 
 /**
  * Add quick edit functionality for Cities categories
@@ -705,137 +762,6 @@ function cities_quick_edit_javascript() {
     <?php
 }
 add_action('admin_footer-edit.php', 'cities_quick_edit_javascript');
-
-// ────────────────────────────────────────────────────────────────────
-// 
-// remove the bogus WPML "x-default" fallback
-add_filter( 'wpml_hreflangs', function( $hreflangs ) {
-    if ( isset( $hreflangs['x-default'] ) ) {
-        unset( $hreflangs['x-default'] );
-    }
-    return $hreflangs;
-}, 10 );
-
-
-
-add_filter( 'wpseo_alternate_hreflang', function( $url, $language_code ) {
-    // Only touch your property CPTs if you like:
-    if ( is_singular( 'properties' ) ) {
-        // Convert + to %20 so it exactly matches your canonical URL
-        $url = str_replace( '+', '%20', $url );
-    }
-    return $url;
-}, 10, 2 );
-
-// ────────────────────────────────────────────────────────────────────
-// 1) Strip out any backslash-containing WPML hreflang tags
-add_action( 'wp_head', 'fix_property_url_issues', 0 );
-function fix_property_url_issues() {
-    ob_start( function( $output ) {
-        return preg_replace(
-            '/<link rel="alternate"[^>]*href="[^"\n]*\\\\+[^"\n]*"[^>]*>/',
-            '',
-            $output
-        );
-    } );
-}
-
-// ────────────────────────────────────────────────────────────────────
-// 2) SEO override: ONLY on the main /properties/ archive
-add_action( 'template_redirect', function() {
-    if ( is_post_type_archive( 'properties' ) && is_main_query() ) {
-        add_filter( 'pre_get_document_title', 'pt_properties_archive_title',    20 );
-        add_filter( 'wpseo_title',            'pt_properties_archive_title',    20 );
-        add_filter( 'wpseo_metadesc',         'pt_properties_archive_metadesc', 20 );
-    }
-}, 0 );
-
-/**
- * Archive-only <title> override (never on single properties).
- */
-function pt_properties_archive_title( $orig ) {
-    if ( is_singular( 'properties' ) ) {
-        return $orig;
-    }
-    if ( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE === 'fr' ) {
-        return esc_html('Maisons à vendre | l\'Ouest-de-l\'Île et Vaudreuil-Soulanges | Peter Thompson Immobilier');
-    }
-    return esc_html('Homes for Sale | West Island & Vaudreuil-Soulanges | Peter Thompson Real Estate');
-}
-
-/**
- * Archive-only meta-description override (never on single properties).
- */
-function pt_properties_archive_metadesc( $orig ) {
-    if ( is_singular( 'properties' ) ) {
-        return $orig;
-    }
-    if ( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE === 'fr' ) {
-        return esc_html('Commencez votre parcours immobilier en explorant les maisons à vendre dans les régions de l\'Ouest-de-l\'Île et de Vaudreuil-Soulanges. Contactez-nous pour planifier une visite !');
-    }
-    return esc_html('Start your real estate journey by exploring homes for sale across the West Island and Vaudreuil-Soulanges regions. Contact us to schedule your visit!');
-}
-// ────────────────────────────────────────────────────────────────────
-// Force single property pages to use the excerpt as the meta description
-add_filter( 'wpseo_metadesc', function( $orig ) {
-    $mls = get_query_var( 'mls' );
-    if ( $mls ) {
-        // Fetch the same JSON your template uses:
-        $lang = defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en';
-        $data = json_decode( file_get_contents(
-            "https://realestate.marketingwebsites.ca/api.php/property/$mls?lang=$lang"
-        ), true );
-
-        // Pull the description field
-        $desc = $data['results'][ $mls ]['description'] ?? '';
-
-        // Fallback to excerpt if that's empty
-        if ( ! $desc ) {
-            $desc = strip_tags( get_the_excerpt() );
-        }
-
-        // Trim to ~30 words
-        return wp_trim_words( $desc, 30, '…' );
-    }
-
-    return $orig;
-}, 25 );
-
-/**
- * Single-listing URLs → force WP to load the /properties/ page
- * and set the "mls" query var so your template picks it up.
- */
-function ptre_add_property_rewrite_rules() {
-  // EN
-  add_rewrite_rule(
-    '^properties/[^/]+/([0-9]+)/?$',
-    'index.php?pagename=properties&mls=$matches[1]',
-    'top'
-  );
-
-  // FR (under the /fr/ prefix)
-  add_rewrite_rule(
-    '^fr/properties/[^/]+/([0-9]+)/?$',
-    'index.php?pagename=properties&mls=$matches[1]&lang=fr',
-    'top'
-  );
-}
-add_action( 'init', 'ptre_add_property_rewrite_rules', 10 );
-
-/**
-
- * Override Yoast's canonical on single property pages
- */
-add_filter( 'wpseo_canonical', function( $canonical ) {
-    // if we're on a "property" URL (i.e. ?mls=#### is set)…
-    if ( get_query_var('mls') ) {
-        // grab the raw request path (no query-string)
-        $request = strtok( $_SERVER['REQUEST_URI'], '?' );
-        // build and return a perfect absolute URL
-        return home_url( $request );
-    }
-    return $canonical;
-}, 20 );
 
 /**
  * Enqueue custom CSS fixes
