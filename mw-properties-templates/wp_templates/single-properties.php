@@ -77,9 +77,12 @@ $region = $result_obj[$_GET['mls']]['property']['region_code'];
 
 $related_obj = json_decode(file_get_contents("https://realestate.marketingwebsites.ca/api.php/properties?agents=$agent&region_code=$region&property_category=$cat&property_type_code=$type&limit=5&order=rand"));
 
+// Use the existing get_property_permalink function for URLs
 $address = $result_obj[$_GET['mls']]['property']['civic_number_start'] . " " . str_replace("-", " ", $result_obj[$_GET['mls']]['property']['street_name']) . ", " . explode("/", $result_obj[$_GET['mls']]['property']['municipality_name'])[0] . ", QC " . substr($result_obj[$_GET['mls']]['property']['postal_code'], 0, 3);
 $street = $result_obj[$_GET['mls']]['property']['civic_number_start'] . " " . str_replace("-", " ", $result_obj[$_GET['mls']]['property']['street_name']);
-$city = explode("/", $result_obj[$_GET['mls']]['property']['municipality_name'])[0] . ", QC " . substr($result_obj[$_GET['mls']]['property']['postal_code'], 0, 3);
+$address = htmlspecialchars($result_obj[$_GET['mls']]['property']['civic_number_start'] . " " . str_replace("-", " ", $result_obj[$_GET['mls']]['property']['street_name']) . ", " . explode("/", $result_obj[$_GET['mls']]['property']['municipality_name'])[0] . ", QC " . substr($result_obj[$_GET['mls']]['property']['postal_code'], 0, 3), ENT_QUOTES, 'UTF-8');
+$street = htmlspecialchars($result_obj[$_GET['mls']]['property']['civic_number_start'] . " " . str_replace("-", " ", $result_obj[$_GET['mls']]['property']['street_name']), ENT_QUOTES, 'UTF-8');
+$city = htmlspecialchars(explode("/", $result_obj[$_GET['mls']]['property']['municipality_name'])[0] . ", QC " . substr($result_obj[$_GET['mls']]['property']['postal_code'], 0, 3), ENT_QUOTES, 'UTF-8');
 $longlat = $result_obj[$_GET['mls']]['property']['latitude'] . "," . $result_obj[$_GET['mls']]['property']['longitude'];
 $vr = $result_obj[$_GET['mls']]['property']['virtual_visit_url'];
 $url = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -172,15 +175,20 @@ add_filter( 'pre_get_document_title', function() use ( $street, $city ) {
     function addOgTags()
     {
         global $result_obj;
+        $address = $result_obj[$_GET['mls']]['property']['civic_number_start'] . " " . str_replace("-", " ", $result_obj[$_GET['mls']]['property']['street_name']) . ", " . explode("/", $result_obj[$_GET['mls']]['property']['municipality_name'])[0] . ", QC " . substr($result_obj[$_GET['mls']]['property']['postal_code'], 0, 3);
+        $description = strip_tags($result_obj[$_GET['mls']]['description']);
+        $url = home_url($_SERVER['REQUEST_URI']);
+        $image = $result_obj[$_GET['mls']]['images'][0]['photourl'];
+        
         echo '
         <!-- OG TAGS STARTS -->
-        <meta name="description" content="' . strip_tags($result_obj[$_GET['mls']]['description']) . '" />
-        <meta property="og:site_name" content="' . $_SERVER["HTTP_HOST"] . '"/>
+        <meta name="description" content="' . esc_attr($description) . '" />
+        <meta property="og:site_name" content="' . esc_attr($_SERVER["HTTP_HOST"]) . '"/>
         <meta property="og:type" content="WebSite">
-        <meta property="og:url" content="https://' . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] . '">
-        <meta property="og:image" content="' . $result_obj[$_GET['mls']]['images'][0]['photourl'] . '">
-        <meta property="og:title"  content="' . $result_obj[$_GET['mls']]['property']['civic_number_start'] . " " . str_replace("-", " ", $result_obj[$_GET['mls']]['property']['street_name']) . ", " . explode("/", $result_obj[$_GET['mls']]['property']['municipality_name'])[0] . ", QC " . substr($result_obj[$_GET['mls']]['property']['postal_code'], 0, 3) . '">
-        <meta property="og:description"  content="' . strip_tags($result_obj[$_GET['mls']]['description']) . '">
+        <meta property="og:url" content="' . esc_url($url) . '">
+        <meta property="og:image" content="' . esc_url($image) . '">
+        <meta property="og:title" content="' . esc_attr($address) . '">
+        <meta property="og:description" content="' . esc_attr($description) . '">
         <!-- OG TAGS ENDS -->
         ';
     }
