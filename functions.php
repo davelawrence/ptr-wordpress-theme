@@ -486,49 +486,6 @@ function add_real_estate_schema_to_yoast($data) {
 }
 add_filter('wpseo_json_ld_output', 'add_real_estate_schema_to_yoast', 20);
 
-
-/**
- * Property URL and SEO handling
- * Consolidated functions for proper URL encoding and multilingual support
- */
-
-/**
- * Generate properly encoded permalink for property
- */
-function get_property_permalink($property) {
-    // build the "street address" portion
-    $address = $property->civic_number_start . ' ' . $property->street_name;
-
-    // Safety check for null or empty values
-    if (empty($address)) {
-        return home_url("/properties/address-unavailable/{$property->mls_no}/");
-    }
-
-    // Convert to UTF-8 if not already
-    if (!mb_check_encoding($address, 'UTF-8')) {
-        $address = mb_convert_encoding($address, 'UTF-8');
-    }
-
-    // Double-check the conversion worked
-    if (!mb_check_encoding($address, 'UTF-8')) {
-        // Fallback: remove non-UTF8 characters
-        $address = mb_convert_encoding($address, 'UTF-8', 'UTF-8');
-    }
-
-    // Normalize the string (decompose and recompose)
-    if (function_exists('normalizer_normalize')) {
-        $address = normalizer_normalize($address, Normalizer::FORM_C);
-    }
-
-    // Additional safety: remove any potentially problematic characters
-    $address = preg_replace('/[^\p{L}\p{N}\s\-\']/u', '', $address);
-
-    // rawurlencode() will turn spaces into %20 (not "+"), and accents into %XX
-    $slug = rawurlencode($address);
-
-    return home_url("/properties/{$slug}/{$property->mls_no}/");
-}
-
 /**
  * Handle multilingual property URLs (hreflang tags)
  */
@@ -627,17 +584,6 @@ function ptre_add_property_rewrite_rules() {
     );
 }
 add_action('init', 'ptre_add_property_rewrite_rules', 10);
-
-/**
- * Ensure consistent canonical URLs in Yoast SEO
- */
-add_filter('wpseo_canonical', function($canonical) {
-    if (get_query_var('mls')) {
-        $request = strtok($_SERVER['REQUEST_URI'], '?');
-        return home_url($request);
-    }
-    return $canonical;
-}, 20);
 
 // Remove WPML's x-default fallback as we handle it ourselves
 add_filter('wpml_hreflangs', function($hreflangs) {
@@ -797,5 +743,13 @@ add_filter('wpseo_json_ld_output', function ($data) {
     }
 
     return $data;
+}, 20);
+
+// Fix: Set canonical to current URL for single property pages (with mls query var)
+add_filter('wpseo_canonical', function($canonical) {
+    if (get_query_var('mls')) {
+        return home_url($_SERVER['REQUEST_URI']);
+    }
+    return $canonical;
 }, 20);
 
