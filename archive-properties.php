@@ -12,10 +12,10 @@
 
 // 1) Set your strings up front
 if ( defined('ICL_LANGUAGE_CODE') && ICL_LANGUAGE_CODE === 'fr' ) {
-    $pt_title = 'Parcourez les maisons à vendre dans l’Ouest-de-l’Île et Vaudreuil-Soulanges | Peter Thompson Immobilier';
+    $pt_title = 'Maisons à vendre Ouest-de-l’Île & Vaudreuil | Peter Thompson';
     $pt_desc  = 'Commencez votre parcours immobilier en explorant les maisons à vendre dans les régions de l’Ouest-de-l’Île et de Vaudreuil-Soulanges. Contactez-nous pour planifier une visite !';
 } else {
-    $pt_title = 'Browse Homes for Sale in West Island & Vaudreuil-Soulanges | Peter Thompson Real Estate';
+    $pt_title = 'Homes for Sale in West Island & Vaudreuil | Peter Thompson';
     $pt_desc  = 'Start your real estate journey by exploring homes for sale across the West Island and Vaudreuil-Soulanges regions. Contact us to schedule your visit!';
 }
 
