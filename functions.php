@@ -712,3 +712,11 @@ add_action('wp_head', function() {
     }
 }, 1); // Run early
 
+// Remove WPML's x-default hreflang for property pages
+add_filter('wpml_hreflangs', function($hreflangs) {
+    if (is_singular('properties') || is_post_type_archive('properties')) {
+        unset($hreflangs['x-default']);
+    }
+    return $hreflangs;
+}, 20);
+
